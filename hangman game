@@ -1,0 +1,46 @@
+import random
+
+def select_random_word():
+    
+    words = ["apple", "mango", "grape", "orange", "kiwi", "pear"]
+    return random.choice(words)
+
+def display_word(word, guessed_letters):
+  
+    display = "".join([letter if letter in guessed_letters else "_" for letter in word])
+    return display
+
+def hangman():
+    word = select_random_word() 
+    guessed_letters = set() p
+    attempts = 5  
+    print("Welcome to Hangman Game! ")
+    print("You have", attempts, "incorrect guesses allowed.")
+    
+    while attempts > 0:
+        print("\nWord: ", display_word(word, guessed_letters))
+        guess = input("Guess a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single letter.")
+            continue
+
+        if guess in guessed_letters:
+            print("You have already guessed that letter.")
+            continue
+
+        guessed_letters.add(guess)
+
+        if guess in word:
+            print("Good guess!")
+        else:
+            attempts -= 1
+            print("Incorrect guess. You have", attempts, "attempts remaining.")
+
+        if set(word) <= guessed_letters:  
+            print("\nCongratulations! You guessed the word:", word)
+            break
+    else:
+        print("\nGame over! The word was:", word)
+
+hangman()
